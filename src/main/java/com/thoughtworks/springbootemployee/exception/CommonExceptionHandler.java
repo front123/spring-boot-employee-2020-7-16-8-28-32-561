@@ -20,4 +20,10 @@ public class CommonExceptionHandler {
     void raiseEmptyResultDataAccessException(){
 
     }
+
+    @ExceptionHandler(CompanyNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    void raiseCompanyNotFoundException(){
+
+    }
 }
