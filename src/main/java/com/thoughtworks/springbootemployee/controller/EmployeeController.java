@@ -36,4 +36,9 @@ public class EmployeeController {
     public void deleteEmployeeById(@PathVariable Integer id){
         employeeService.deleteEmployeeById(id);
     }
+
+    @GetMapping( params = {"gender"})
+    public List<Employee> getEmployeesByGender(@RequestParam String gender){
+        return employeeService.getEmployeesByGender(gender);
+    }
 }

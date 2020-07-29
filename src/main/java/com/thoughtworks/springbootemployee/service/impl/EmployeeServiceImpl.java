@@ -6,6 +6,7 @@ import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import com.thoughtworks.springbootemployee.service.EmployeeService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -40,6 +41,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public void deleteEmployeeById(int id) {
         employeeRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Employee> getEmployeesByGender(String gender) {
+        return new ArrayList<>();
     }
 
 

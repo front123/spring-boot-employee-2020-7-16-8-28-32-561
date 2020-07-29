@@ -44,12 +44,6 @@ public class EmployeeServiceTest {
     @Test
     void should_return_employee_id_1_when_get_employee_by_id_given_2_employees_id_1_and_2() throws EmployeeNotFoundException {
         //given
-        List<Employee> employeesTemp = new ArrayList<>();
-        for (int i = 0; i < 2; i++) {
-            Employee employee = new Employee();
-            employee.setId(1);
-            employeesTemp.add(employee);
-        }
         Employee employee = new Employee();
         employee.setId(1);
         Mockito.when(employeeRepository.findById(1)).thenReturn(java.util.Optional.of(employee));
@@ -71,4 +65,35 @@ public class EmployeeServiceTest {
         Assertions.assertEquals(employee, actualEmployee);
     }
 
+    /*
+    given
+        2 male and 1 female employees and gender = male
+    when
+        findByGender
+    then
+        return a list size = 2
+     */
+    @Test
+    void should_return_2_employees_when_get_employees_by_gender_given_2_male_and_1_female_employees_and_gender_is_male() {
+        //given
+        String gender = "male";
+        List<Employee> maleAndFemaleEmployees = new ArrayList<>();
+        List<Employee> maleEmployees = new ArrayList<>();
+        for(int i=0; i<2; i++){
+            Employee employee = new Employee();
+            employee.setId(i);
+            employee.setGender("male");
+            maleEmployees.add(employee);
+            maleAndFemaleEmployees.add(employee);
+        }
+        Employee femaleEmployee = new Employee();
+        femaleEmployee.setId(3);
+        femaleEmployee.setGender("female");
+        maleAndFemaleEmployees.add(femaleEmployee);
+         //when
+        List<Employee> employees = employeeService.getEmployeesByGender(gender);
+
+        //then
+        Assertions.assertEquals(2, employees.size());
+    }
 }
