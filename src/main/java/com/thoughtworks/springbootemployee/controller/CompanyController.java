@@ -4,10 +4,10 @@ import com.thoughtworks.springbootemployee.entity.Company;
 import com.thoughtworks.springbootemployee.entity.Employee;
 import com.thoughtworks.springbootemployee.exception.CompanyNotFoundException;
 import com.thoughtworks.springbootemployee.service.CompanyService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -35,4 +35,12 @@ public class CompanyController {
     public List<Employee> getAllEmployeesByCompanyId(@PathVariable Integer id){
         return companyService.getAllEmployeesByCompanyId(id);
     }
+
+    @GetMapping(params = {"page", "pageSize"})
+    public Page<Company> getCompaniesByPaging(@RequestParam Integer page, @RequestParam Integer pageSize) {
+        Pageable pageable = PageRequest.of(page, pageSize);
+        return companyService.getCompaniesByPaging(pageable);
+    }
+
+
 }

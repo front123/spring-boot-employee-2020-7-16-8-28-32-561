@@ -5,6 +5,8 @@ import com.thoughtworks.springbootemployee.entity.Employee;
 import com.thoughtworks.springbootemployee.exception.CompanyNotFoundException;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import com.thoughtworks.springbootemployee.service.CompanyService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,5 +32,10 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public List<Employee> getAllEmployeesByCompanyId(Integer id) {
         return companyRepository.findById(id).get().getEmployees();
+    }
+
+    @Override
+    public Page<Company> getCompaniesByPaging(Pageable pageable) {
+        return companyRepository.findAll(pageable);
     }
 }
