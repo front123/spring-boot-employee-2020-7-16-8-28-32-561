@@ -4,9 +4,10 @@ import com.thoughtworks.springbootemployee.entity.Employee;
 import com.thoughtworks.springbootemployee.exception.EmployeeNotFoundException;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import com.thoughtworks.springbootemployee.service.EmployeeService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -46,6 +47,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public List<Employee> getEmployeesByGender(String gender) {
         return employeeRepository.findByGender(gender);
+    }
+
+    @Override
+    public Page<Employee> getEmployeesByPaging(Pageable pageable) {
+        return employeeRepository.findAll(pageable);
     }
 
 

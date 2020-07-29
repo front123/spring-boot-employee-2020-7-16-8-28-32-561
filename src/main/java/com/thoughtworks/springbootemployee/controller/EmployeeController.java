@@ -3,9 +3,11 @@ package com.thoughtworks.springbootemployee.controller;
 import com.thoughtworks.springbootemployee.entity.Employee;
 import com.thoughtworks.springbootemployee.exception.EmployeeNotFoundException;
 import com.thoughtworks.springbootemployee.service.EmployeeService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -40,5 +42,11 @@ public class EmployeeController {
     @GetMapping( params = {"gender"})
     public List<Employee> getEmployeesByGender(@RequestParam String gender){
         return employeeService.getEmployeesByGender(gender);
+    }
+
+    @GetMapping( params = {"page", "pageSize"})
+    public Page<Employee> getEmployeesByPaging(@RequestParam Integer page, @RequestParam Integer pageSize){
+        Pageable pageable = PageRequest.of(page, pageSize);
+        return employeeService.getEmployeesByPaging(pageable);
     }
 }
