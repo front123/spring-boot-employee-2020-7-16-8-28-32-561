@@ -18,4 +18,6 @@ public interface CompanyService {
     Page<Company> getCompaniesByPaging(Pageable pageable);
 
     Company addCompany(Company company);
+
+    Company updateCompany(Company company);
 }
