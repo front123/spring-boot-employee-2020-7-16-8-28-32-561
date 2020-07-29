@@ -1,5 +1,6 @@
 package com.thoughtworks.springbootemployee.controller;
 
+import com.thoughtworks.springbootemployee.entity.Company;
 import com.thoughtworks.springbootemployee.entity.Employee;
 import com.thoughtworks.springbootemployee.exception.EmployeeNotFoundException;
 import com.thoughtworks.springbootemployee.service.EmployeeService;
@@ -48,5 +49,10 @@ public class EmployeeController {
     public Page<Employee> getEmployeesByPaging(@RequestParam Integer page, @RequestParam Integer pageSize){
         Pageable pageable = PageRequest.of(page, pageSize);
         return employeeService.getEmployeesByPaging(pageable);
+    }
+
+    @PutMapping("/{id}")
+    public Employee updateEmployee(@PathVariable Integer id, @RequestBody Employee employee){
+        return employeeService.updateEmployee(employee);
     }
 }
