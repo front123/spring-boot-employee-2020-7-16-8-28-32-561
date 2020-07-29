@@ -65,6 +65,6 @@ public class EmployeeServiceTest {
         //when
         Employee actualEmployee = employeeService.getEmployeeById(1);
         //then
-        Assertions.assertEquals(1, employee.getId());
+        Assertions.assertEquals(1, actualEmployee.getId());
     }
 }
