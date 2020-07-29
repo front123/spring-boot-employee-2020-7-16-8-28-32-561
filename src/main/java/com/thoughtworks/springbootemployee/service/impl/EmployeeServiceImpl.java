@@ -1,10 +1,11 @@
 package com.thoughtworks.springbootemployee.service.impl;
+
 import com.thoughtworks.springbootemployee.entity.Employee;
+import com.thoughtworks.springbootemployee.exception.EmployeeNotFoundException;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import com.thoughtworks.springbootemployee.service.EmployeeService;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -22,7 +23,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee getEmployeeById(int id) {
-        return new Employee();
+    public Employee getEmployeeById(int id) throws EmployeeNotFoundException {
+        return employeeRepository.findById(id).orElseThrow(EmployeeNotFoundException::new);
     }
 }

@@ -1,6 +1,7 @@
 package com.thoughtworks.springbootemployee;
 
 import com.thoughtworks.springbootemployee.entity.Employee;
+import com.thoughtworks.springbootemployee.exception.EmployeeNotFoundException;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import com.thoughtworks.springbootemployee.service.EmployeeService;
 import com.thoughtworks.springbootemployee.service.impl.EmployeeServiceImpl;
@@ -50,7 +51,7 @@ public class EmployeeServiceTest {
      */
 
     @Test
-    void should_return_employee_id_1_when_get_employee_by_id_given_2_employees_id_1_and_2() {
+    void should_return_employee_id_1_when_get_employee_by_id_given_2_employees_id_1_and_2() throws EmployeeNotFoundException {
         //given
         List<Employee> employeesTemp = new ArrayList<>();
         for(int i=0; i<2; i++){
@@ -58,10 +59,12 @@ public class EmployeeServiceTest {
             employee.setId(1);
             employeesTemp.add(employee);
         }
+        Employee employee = new Employee();
+        employee.setId(1);
+        Mockito.when(employeeRepository.findById(1)).thenReturn(java.util.Optional.of(employee));
         //when
-        Employee employee = employeeService.getEmployeeById(1);
+        Employee actualEmployee = employeeService.getEmployeeById(1);
         //then
         Assertions.assertEquals(1, employee.getId());
-
     }
 }
