@@ -29,7 +29,7 @@ public class EmployeeServiceTest {
     void should_size_equal_2_when_get_all_employees_given_2_employees() {
         //given
         List<Employee> employeesTemp = new ArrayList<>();
-        for(int i=0; i<2; i++){
+        for (int i = 0; i < 2; i++) {
             Employee employee = new Employee();
             employee.setId(1);
             employeesTemp.add(employee);
@@ -41,20 +41,11 @@ public class EmployeeServiceTest {
         Assertions.assertEquals(2, employees.size());
     }
 
-    /*
-    given
-        2 employees and 1 employee id
-    when
-        getEmployeeById
-    then
-        return employee id 1
-     */
-
     @Test
     void should_return_employee_id_1_when_get_employee_by_id_given_2_employees_id_1_and_2() throws EmployeeNotFoundException {
         //given
         List<Employee> employeesTemp = new ArrayList<>();
-        for(int i=0; i<2; i++){
+        for (int i = 0; i < 2; i++) {
             Employee employee = new Employee();
             employee.setId(1);
             employeesTemp.add(employee);
@@ -67,4 +58,24 @@ public class EmployeeServiceTest {
         //then
         Assertions.assertEquals(1, actualEmployee.getId());
     }
+    /*
+    given
+        1 employees with id 1
+    when
+        updateEmployee
+    then
+        return 1 employees
+     */
+
+    @Test
+    void should_return_1_employee_with_id_1_when_update_employee_given_1_employee_with_id_1(){
+        //given
+        Employee employee = new Employee();
+        employee.setId(1);
+        //when
+        Employee actualEmployee = employeeService.updateEmployee(employee);
+        //then
+        Assertions.assertEquals(employee, actualEmployee);
+    }
+
 }

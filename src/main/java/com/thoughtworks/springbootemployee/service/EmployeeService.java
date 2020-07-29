@@ -8,5 +8,8 @@ import java.util.Optional;
 
 public interface EmployeeService {
     List<Employee> getAllEmployees();
+
     Employee getEmployeeById(int id) throws EmployeeNotFoundException;
+
+    Employee updateEmployee(Employee employee);
 }
