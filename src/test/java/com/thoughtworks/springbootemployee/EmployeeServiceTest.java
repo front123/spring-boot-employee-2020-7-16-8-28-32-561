@@ -39,4 +39,29 @@ public class EmployeeServiceTest {
         //then
         Assertions.assertEquals(2, employees.size());
     }
+
+    /*
+    given
+        2 employees and 1 employee id
+    when
+        getEmployeeById
+    then
+        return employee id 1
+     */
+
+    @Test
+    void should_return_employee_id_1_when_get_employee_by_id_given_2_employees_id_1_and_2() {
+        //given
+        List<Employee> employeesTemp = new ArrayList<>();
+        for(int i=0; i<2; i++){
+            Employee employee = new Employee();
+            employee.setId(1);
+            employeesTemp.add(employee);
+        }
+        //when
+        Employee employee = employeeService.getEmployeeById(1);
+        //then
+        Assertions.assertEquals(1, employee.getId());
+
+    }
 }
