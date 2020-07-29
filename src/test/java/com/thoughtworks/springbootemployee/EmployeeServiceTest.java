@@ -58,14 +58,6 @@ public class EmployeeServiceTest {
         //then
         Assertions.assertEquals(1, actualEmployee.getId());
     }
-    /*
-    given
-        1 employees with id 1
-    when
-        updateEmployee
-    then
-        return 1 employees
-     */
 
     @Test
     void should_return_1_employee_with_id_1_when_update_employee_given_1_employee_with_id_1(){
