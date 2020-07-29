@@ -1,10 +1,18 @@
 package com.thoughtworks.springbootemployee.entity;
 
+import javax.persistence.*;
+
+@Entity
 public class Employee {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
     private int age;
     private String gender;
+
+    @JoinColumn(name = "company_id")
+    @ManyToOne
     private Company company;
 
     public int getId() {
