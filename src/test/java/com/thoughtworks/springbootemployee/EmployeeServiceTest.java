@@ -17,15 +17,6 @@ import java.util.List;
 
 @ExtendWith(MockitoExtension.class)
 public class EmployeeServiceTest {
-    /*
-    //given
-        2 employees
-    //when
-        getAllEmployees
-    //then
-        size == 2
-
-     */
 
     @Mock
     private EmployeeRepository employeeRepository;
