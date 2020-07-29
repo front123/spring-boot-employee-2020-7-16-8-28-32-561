@@ -90,6 +90,7 @@ public class EmployeeServiceTest {
         femaleEmployee.setId(3);
         femaleEmployee.setGender("female");
         maleAndFemaleEmployees.add(femaleEmployee);
+        Mockito.when(employeeRepository.findByGender(gender)).thenReturn(maleEmployees);
          //when
         List<Employee> employees = employeeService.getEmployeesByGender(gender);
 
