@@ -18,6 +18,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public List<Employee> getAllEmployees() {
-        return new ArrayList<>();
+        return employeeRepository.findAll();
     }
 }
