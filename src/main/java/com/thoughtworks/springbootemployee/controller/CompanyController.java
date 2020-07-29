@@ -42,5 +42,9 @@ public class CompanyController {
         return companyService.getCompaniesByPaging(pageable);
     }
 
+    @PostMapping()
+    public Company addCompany(@RequestBody Company company){
+        return companyService.addCompany(company);
+    }
 
 }

@@ -12,6 +12,7 @@ public class Company {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int company_id;
+    private String name;
     @JsonIgnore
     @OneToMany(mappedBy = "company")
     private List<Employee> employees;
@@ -30,5 +31,13 @@ public class Company {
 
     public void setEmployees(List<Employee> employees) {
         this.employees = employees;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

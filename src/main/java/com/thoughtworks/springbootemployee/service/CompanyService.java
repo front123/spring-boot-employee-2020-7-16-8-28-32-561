@@ -16,4 +16,6 @@ public interface CompanyService {
     List<Employee> getAllEmployeesByCompanyId(Integer id);
 
     Page<Company> getCompaniesByPaging(Pageable pageable);
+
+    Company addCompany(Company company);
 }
