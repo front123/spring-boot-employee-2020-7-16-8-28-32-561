@@ -12,4 +12,6 @@ public interface EmployeeService {
     Employee getEmployeeById(int id) throws EmployeeNotFoundException;
 
     Employee updateEmployee(Employee employee);
+
+    Employee addEmployee(Employee employee);
 }
