@@ -72,6 +72,7 @@ public class EmployeeServiceTest {
         //given
         Employee employee = new Employee();
         employee.setId(1);
+        Mockito.when(employeeRepository.save(employee)).thenReturn(employee);
         //when
         Employee actualEmployee = employeeService.updateEmployee(employee);
         //then
