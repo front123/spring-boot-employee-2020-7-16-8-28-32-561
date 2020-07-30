@@ -1,13 +1,13 @@
 package com.thoughtworks.springbootemployee.controller;
 
-import com.thoughtworks.springbootemployee.entity.Company;
+import com.thoughtworks.springbootemployee.dto.EmployeeRequest;
+import com.thoughtworks.springbootemployee.dto.EmployeeResponse;
 import com.thoughtworks.springbootemployee.entity.Employee;
 import com.thoughtworks.springbootemployee.exception.EmployeeNotFoundException;
 import com.thoughtworks.springbootemployee.service.EmployeeService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -31,8 +31,8 @@ public class EmployeeController {
     }
 
     @PostMapping()
-    public Employee addEmployee(@RequestBody Employee employee){
-        return employeeService.addEmployee(employee);
+    public EmployeeResponse addEmployee(@RequestBody EmployeeRequest employeeRequest){
+        return employeeService.addEmployee(employeeRequest);
     }
 
     @DeleteMapping("/{id}")

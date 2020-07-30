@@ -1,6 +1,7 @@
 package com.thoughtworks.springbootemployee.service;
 
 import com.thoughtworks.springbootemployee.dto.EmployeeRequest;
+import com.thoughtworks.springbootemployee.dto.EmployeeResponse;
 import com.thoughtworks.springbootemployee.entity.Employee;
 import com.thoughtworks.springbootemployee.exception.EmployeeNotFoundException;
 import org.springframework.data.domain.Page;
@@ -14,13 +15,11 @@ public interface EmployeeService {
 
     Employee updateEmployee(Employee employee);
 
-    Employee addEmployee(Employee employee);
-
     void deleteEmployeeById(int id);
 
     List<Employee> getEmployeesByGender(String gender);
 
     Page<Employee> getEmployeesByPaging(Pageable pageable);
 
-    Employee addEmployee1(EmployeeRequest employeeRequest);
+    EmployeeResponse addEmployee(EmployeeRequest employeeRequest);
 }

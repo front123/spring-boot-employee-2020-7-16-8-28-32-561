@@ -45,4 +45,7 @@ public class EmployeeRequest {
         this.gender = gender;
         this.companyId = companyId;
     }
+
+    public EmployeeRequest() {
+    }
 }

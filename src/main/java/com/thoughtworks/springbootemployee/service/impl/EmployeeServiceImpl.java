@@ -1,12 +1,14 @@
 package com.thoughtworks.springbootemployee.service.impl;
 
 import com.thoughtworks.springbootemployee.dto.EmployeeRequest;
+import com.thoughtworks.springbootemployee.dto.EmployeeResponse;
 import com.thoughtworks.springbootemployee.entity.Company;
 import com.thoughtworks.springbootemployee.entity.Employee;
 import com.thoughtworks.springbootemployee.exception.EmployeeNotFoundException;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import com.thoughtworks.springbootemployee.service.EmployeeService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -41,11 +43,6 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee addEmployee(Employee employee) {
-        return employeeRepository.save(employee);
-    }
-
-    @Override
     public void deleteEmployeeById(int id) {
         employeeRepository.deleteById(id);
     }
@@ -61,15 +58,17 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee addEmployee1(EmployeeRequest employeeRequest) {
+    public EmployeeResponse addEmployee(EmployeeRequest employeeRequest) {
         Optional<Company> company = companyRepository.findById(employeeRequest.getCompanyId());
         Employee employee = new Employee();
-        employee.setName(employeeRequest.getName());
-        employee.setGender(employeeRequest.getGender());
-        employee.setAge(employeeRequest.getAge());
+        BeanUtils.copyProperties(employeeRequest, employee);
         employee.setCompany(company.get());
-        employeeRepository.save(employee);
-        return employee;
+
+        Employee employeeReturn = employeeRepository.save(employee);
+        EmployeeResponse employeeResponse = new EmployeeResponse();
+        BeanUtils.copyProperties(employeeReturn, employeeResponse);
+        employeeResponse.setCompanyName(company.get().getName());
+        return employeeResponse;
     }
 
 
