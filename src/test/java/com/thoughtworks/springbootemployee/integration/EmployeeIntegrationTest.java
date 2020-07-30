@@ -33,6 +33,11 @@ public class EmployeeIntegrationTest extends CommonIntegrationTest{
         mockMvc.perform(get("/employees")).andExpect(status().isOk());
     }
 
-
-
+    @Test
+    void should_return_ok_when_get_employee_by_id_given_id_1() throws Exception{
+        mockMvc.perform(get("/employees/1")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("name").value("chengcheng"));
+    }
 }
