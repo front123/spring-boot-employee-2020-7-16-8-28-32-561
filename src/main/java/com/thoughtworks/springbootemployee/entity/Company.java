@@ -45,4 +45,7 @@ public class Company {
         this.company_id = company_id;
         this.name = name;
     }
+
+    public Company() {
+    }
 }
