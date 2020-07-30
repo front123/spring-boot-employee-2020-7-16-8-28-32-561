@@ -40,4 +40,13 @@ public class EmployeeIntegrationTest extends CommonIntegrationTest{
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("name").value("chengcheng"));
     }
+
+    @Test
+    void should_return_ok_when_add_employee_given_a_company_and_a_employee() throws Exception {
+        String employeeJsonStr = "{\"id\":1,\"name\":\"chengcheng\",\"age\":54,\"gender\":\"male\",\"company\":{\"company_id\":1,\"name\":\"oocl\"}}";
+        mockMvc.perform(post("/employees")
+                .content(employeeJsonStr).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("name").value("chengcheng"));
+
+    }
 }
