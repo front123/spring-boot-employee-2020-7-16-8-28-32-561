@@ -1,5 +1,6 @@
 package com.thoughtworks.springbootemployee.service.impl;
 
+import com.thoughtworks.springbootemployee.dto.EmployeeRequest;
 import com.thoughtworks.springbootemployee.entity.Employee;
 import com.thoughtworks.springbootemployee.exception.EmployeeNotFoundException;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
@@ -52,6 +53,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Page<Employee> getEmployeesByPaging(Pageable pageable) {
         return employeeRepository.findAll(pageable);
+    }
+
+    @Override
+    public Employee addEmployee1(EmployeeRequest employeeRequest) {
+        return new Employee();
     }
 
 

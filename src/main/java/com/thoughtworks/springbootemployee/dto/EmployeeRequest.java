@@ -38,4 +38,11 @@ public class EmployeeRequest {
     public void setCompanyId(int companyId) {
         this.companyId = companyId;
     }
+
+    public EmployeeRequest(String name, int age, String gender, int companyId) {
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+        this.companyId = companyId;
+    }
 }

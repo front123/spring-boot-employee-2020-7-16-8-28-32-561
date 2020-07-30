@@ -40,4 +40,9 @@ public class Company {
     public void setName(String name) {
         this.name = name;
     }
+
+    public Company(int company_id, String name) {
+        this.company_id = company_id;
+        this.name = name;
+    }
 }
