@@ -16,6 +16,10 @@ public class Employee {
     @ManyToOne
     private Company company;
 
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+
     public int getId() {
         return id;
     }
