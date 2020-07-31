@@ -26,8 +26,9 @@ public class EmployeeIntegrationTest extends CommonIntegrationTest {
         String companyJsonStr = "{\"name\":\"oocl\"}";
         mockMvc.perform(post("/companies").content(companyJsonStr).contentType(MediaType.APPLICATION_JSON));
     }
-    void addAEmployeeJay() throws Exception{
-        String employeeJsonStr = "{\n" +"\"name\":\"Jay\",\n" +"\"age\": 15,\n" +"\"gender\": \"male\",\n" +"\"companyId\":1\n" +"}";
+
+    void addAEmployeeJay() throws Exception {
+        String employeeJsonStr = "{\n" + "\"name\":\"Jay\",\n" + "\"age\": 15,\n" + "\"gender\": \"male\",\n" + "\"companyId\":1\n" + "}";
         mockMvc.perform(post("/employees").content(employeeJsonStr).contentType(MediaType.APPLICATION_JSON));
     }
 
@@ -41,10 +42,10 @@ public class EmployeeIntegrationTest extends CommonIntegrationTest {
         //given
         addACompanyOOCl();
         addAEmployeeJay();
-        int employeeId= 1;
+        int employeeId = 1;
 
         //when and then
-        mockMvc.perform(get("/employees/"+Integer.toString(employeeId))
+        mockMvc.perform(get("/employees/" + Integer.toString(employeeId))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("name").value("Jay"));
@@ -55,7 +56,7 @@ public class EmployeeIntegrationTest extends CommonIntegrationTest {
         //given
         addACompanyOOCl();
         //when and then
-        String employeeJsonStr = "{\n" +"\"name\":\"Jay\",\n" +"\"age\": 15,\n" +"\"gender\": \"male\",\n" +"\"companyId\":1\n" +"}";
+        String employeeJsonStr = "{\n" + "\"name\":\"Jay\",\n" + "\"age\": 15,\n" + "\"gender\": \"male\",\n" + "\"companyId\":1\n" + "}";
         mockMvc.perform(post("/employees")
                 .content(employeeJsonStr).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("name").value("Jay"));
@@ -67,14 +68,28 @@ public class EmployeeIntegrationTest extends CommonIntegrationTest {
         //given
         addACompanyOOCl();
         addAEmployeeJay();
-        int employeeId= 1;
+        int employeeId = 1;
         //when and then
-        mockMvc.perform(delete("/employees/"+ Integer.toString(employeeId))
+        mockMvc.perform(delete("/employees/" + Integer.toString(employeeId))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
 
+    @Test
+    void should_return_ok_when_modify_a_employee_given_a_employee() throws Exception {
+        //given
+        addACompanyOOCl();
+        addAEmployeeJay();
+        int employeeId = 1;
+        String modifyEmployeeJsonStr = "{\n" + "\"name\":\"chengcheng\",\n" + "\"age\": 15,\n" + "\"gender\": \"Female\",\n" + "\"companyId\":1\n" + "}";
+        //when and then
+        mockMvc.perform(put("/employees/" + Integer.toString(employeeId))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(modifyEmployeeJsonStr))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("name").value("chengcheng"));
 
+    }
 
 
 }
