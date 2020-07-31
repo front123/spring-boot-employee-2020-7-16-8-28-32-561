@@ -91,5 +91,23 @@ public class EmployeeIntegrationTest extends CommonIntegrationTest {
 
     }
 
+    @Test
+    void should_return_2_when_paged_employee_list_given_page_2_and_page_size_4() throws Exception {
+        //given
+        addACompanyOOCl();
+        for (int i = 0; i < 10; i++) {
+            addAEmployeeJay();
+        }
+        //when and then
+        String url = "/employees/?page=2&pageSize=4";
+        mockMvc.perform(get(url)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("content[0].id").value(9))
+                .andExpect(jsonPath("content[1].id").value(10))
+                .andExpect(jsonPath("content[2].id").doesNotExist());
+
+    }
+
 
 }
