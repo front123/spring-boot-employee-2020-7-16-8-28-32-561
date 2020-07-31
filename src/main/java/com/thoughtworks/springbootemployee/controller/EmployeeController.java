@@ -3,12 +3,15 @@ package com.thoughtworks.springbootemployee.controller;
 import com.thoughtworks.springbootemployee.dto.EmployeeRequest;
 import com.thoughtworks.springbootemployee.dto.EmployeeResponse;
 import com.thoughtworks.springbootemployee.entity.Employee;
+import com.thoughtworks.springbootemployee.exception.CompanyNotFoundException;
 import com.thoughtworks.springbootemployee.exception.EmployeeNotFoundException;
 import com.thoughtworks.springbootemployee.service.EmployeeService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -31,7 +34,7 @@ public class EmployeeController {
     }
 
     @PostMapping()
-    public EmployeeResponse addEmployee(@RequestBody EmployeeRequest employeeRequest){
+    public EmployeeResponse addEmployee(@RequestBody @Valid EmployeeRequest employeeRequest) throws CompanyNotFoundException {
         return employeeService.addEmployee(employeeRequest);
     }
 

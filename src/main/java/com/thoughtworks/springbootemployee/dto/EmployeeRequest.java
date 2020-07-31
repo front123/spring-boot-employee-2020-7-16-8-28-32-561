@@ -1,9 +1,16 @@
 package com.thoughtworks.springbootemployee.dto;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 public class EmployeeRequest {
+    @NotNull
     private String name;
+    @NotNull
     private int age;
+    @Size(min = 1,max = 10)
     private String gender;
+    @NotNull
     private int companyId;
 
     public String getName() {
