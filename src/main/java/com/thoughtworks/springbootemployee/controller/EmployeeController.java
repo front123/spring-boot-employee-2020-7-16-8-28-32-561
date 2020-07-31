@@ -39,23 +39,23 @@ public class EmployeeController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteEmployeeById(@PathVariable Integer id){
+    public void deleteEmployeeById(@PathVariable Integer id) {
         employeeService.deleteEmployeeById(id);
     }
 
-    @GetMapping( params = {"gender"})
-    public List<Employee> getEmployeesByGender(@RequestParam String gender){
+    @GetMapping(params = {"gender"})
+    public List<Employee> getEmployeesByGender(@RequestParam String gender) {
         return employeeService.getEmployeesByGender(gender);
     }
 
-    @GetMapping( params = {"page", "pageSize"})
-    public Page<Employee> getEmployeesByPaging(@RequestParam Integer page, @RequestParam Integer pageSize){
+    @GetMapping(params = {"page", "pageSize"})
+    public Page<Employee> getEmployeesByPaging(@RequestParam Integer page, @RequestParam Integer pageSize) {
         Pageable pageable = PageRequest.of(page, pageSize);
         return employeeService.getEmployeesByPaging(pageable);
     }
 
     @PutMapping("/{id}")
-    public Employee updateEmployee(@PathVariable Integer id, @RequestBody Employee employee){
-        return employeeService.updateEmployee(employee);
+    public EmployeeResponse updateEmployee(@PathVariable Integer id, @RequestBody EmployeeRequest employeeRequest) throws CompanyNotFoundException {
+        return employeeService.updateEmployee(id, employeeRequest);
     }
 }

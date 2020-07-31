@@ -42,8 +42,19 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee updateEmployee(Employee employee) {
-        return employeeRepository.save(employee);
+    public EmployeeResponse updateEmployee(Integer employeeId,EmployeeRequest employeeRequest) throws CompanyNotFoundException {
+
+        Optional<Company> company = Optional.ofNullable(companyService.getCompanyByID(employeeRequest.getCompanyId()));
+        Employee employee = new Employee();
+        BeanUtils.copyProperties(employeeRequest, employee);
+        employee.setCompany(company.get());
+        employee.setId(employeeId);
+        Employee employeeReturn = employeeRepository.save(employee);
+
+        EmployeeResponse employeeResponse = new EmployeeResponse();
+        BeanUtils.copyProperties(employeeReturn, employeeResponse);
+        employeeResponse.setCompanyName(company.get().getName());
+        return employeeResponse;
     }
 
     @Override

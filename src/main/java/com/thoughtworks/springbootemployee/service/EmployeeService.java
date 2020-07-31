@@ -14,7 +14,7 @@ public interface EmployeeService {
 
     Employee getEmployeeById(int id) throws EmployeeNotFoundException;
 
-    Employee updateEmployee(Employee employee);
+    EmployeeResponse updateEmployee(Integer id,EmployeeRequest employeeRequest) throws CompanyNotFoundException;
 
     void deleteEmployeeById(int id);
 
