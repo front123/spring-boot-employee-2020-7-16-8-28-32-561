@@ -4,9 +4,11 @@ import com.thoughtworks.springbootemployee.dto.EmployeeRequest;
 import com.thoughtworks.springbootemployee.dto.EmployeeResponse;
 import com.thoughtworks.springbootemployee.entity.Company;
 import com.thoughtworks.springbootemployee.entity.Employee;
+import com.thoughtworks.springbootemployee.exception.CompanyNotFoundException;
 import com.thoughtworks.springbootemployee.exception.EmployeeNotFoundException;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
+import com.thoughtworks.springbootemployee.service.CompanyService;
 import com.thoughtworks.springbootemployee.service.EmployeeService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
@@ -21,10 +23,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     private final EmployeeRepository employeeRepository;
     private final CompanyRepository companyRepository;
+    private final CompanyService companyService;
 
-    public EmployeeServiceImpl(EmployeeRepository employeeRepository, CompanyRepository companyRepository) {
+    public EmployeeServiceImpl(EmployeeRepository employeeRepository, CompanyRepository companyRepository, CompanyService companyService) {
         this.employeeRepository = employeeRepository;
         this.companyRepository = companyRepository;
+        this.companyService = companyService;
     }
 
     @Override
@@ -58,8 +62,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public EmployeeResponse addEmployee(EmployeeRequest employeeRequest) {
-        Optional<Company> company = companyRepository.findById(employeeRequest.getCompanyId());
+    public EmployeeResponse addEmployee(EmployeeRequest employeeRequest) throws CompanyNotFoundException {
+
+        Optional<Company> company = Optional.ofNullable(companyService.getCompanyByID(employeeRequest.getCompanyId()));
         Employee employee = new Employee();
         BeanUtils.copyProperties(employeeRequest, employee);
         employee.setCompany(company.get());
