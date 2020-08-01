@@ -33,7 +33,6 @@ public class CompanyIntegrationTest extends CommonIntegrationTest{
     private Employee addEmployeeToDB(Company companyInDB){
         Employee employee = new Employee();
         employee.setCompany(companyInDB);
-        employee.setId(1);
         employee.setName("jay");
         employee.setAge(18);
         employee.setGender("male");
@@ -43,12 +42,12 @@ public class CompanyIntegrationTest extends CommonIntegrationTest{
     @Test
     void should_return_ok_when_get_all_companies_given_a_company_in_db() throws Exception {
         //given
-        addOneCompanyToDB();
+        Company companyInDB = addOneCompanyToDB();
         //when and then
         mockMvc.perform(get("/companies")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(content().json("[{\"company_id\":1,\"name\":\"oocl\"}]"));
+                .andExpect(content().json("[{\"company_id\":"+companyInDB.getCompany_id()+",\"name\":\"oocl\"}]"));
     }
 
     @Test
@@ -62,5 +61,20 @@ public class CompanyIntegrationTest extends CommonIntegrationTest{
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("name").value("oocl"));
 
+    }
+
+    @Test
+    void should_return_2_employees_when_get_all_employees_by_company_id_given_a_company_with_2_employees_in_db() throws Exception {
+        //given
+        Company companyInDB = addOneCompanyToDB();
+        Employee employee1 = addEmployeeToDB(companyInDB);
+        Employee employee2 = addEmployeeToDB(companyInDB);
+
+        //when and then
+        mockMvc.perform(get("/companies/"+companyInDB.getCompany_id()+"/employees")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("[0].name").value("jay"))
+                .andExpect(jsonPath("[1].name").value("jay"));
     }
 }
