@@ -29,6 +29,20 @@ public class EmployeeIntegrationTest extends CommonIntegrationTest {
         companyRepository.deleteAll();
     }
 
+    private Company addOneCompanyToDB(){
+        Company company = new Company(1,"oocl");
+        return companyRepository.save(company);
+    }
+    private Employee addEmployeeToDB(Company companyInDB){
+        Employee employee = new Employee();
+        employee.setCompany(companyInDB);
+        employee.setId(1);
+        employee.setName("jay");
+        employee.setAge(18);
+        employee.setGender("male");
+        return employeeRepository.save(employee);
+    }
+
     @Test
     void should_return_ok_when_get_all_employees_given_0_employees() throws Exception {
         mockMvc.perform(get("/employees")).andExpect(status().isOk());
@@ -37,15 +51,8 @@ public class EmployeeIntegrationTest extends CommonIntegrationTest {
     @Test
     void should_return_ok_when_get_employee_by_id_given_id_1() throws Exception {
         //given
-        Company company = new Company(1,"oocl");
-        Company companyInDB = companyRepository.save(company);
-        Employee employee = new Employee();
-        employee.setCompany(companyInDB);
-        employee.setId(1);
-        employee.setName("jay");
-        employee.setAge(18);
-        employee.setGender("male");
-        Employee employeeInDB = employeeRepository.save(employee);
+        Company companyInDB = addOneCompanyToDB();
+        Employee employeeInDB = addEmployeeToDB(companyInDB);
 
         //when and then
         mockMvc.perform(get("/employees/"+employeeInDB.getId()))
@@ -56,9 +63,7 @@ public class EmployeeIntegrationTest extends CommonIntegrationTest {
     @Test
     void should_return_ok_when_add_employee_given_a_company_and_a_employee() throws Exception, CompanyNotFoundException {
         //given
-        Company company = new Company();
-        company.setName("oocl");
-        Company companyInDB = companyRepository.save(company);
+        Company companyInDB = addOneCompanyToDB();
         //when and then
         String employeeJsonStr = "{\n" + "\"name\":\"Jay\",\n" + "\"age\": 15,\n"
                 + "\"gender\": \"male\",\n"
@@ -71,15 +76,8 @@ public class EmployeeIntegrationTest extends CommonIntegrationTest {
     @Test
     void should_return_ok_when_delete_a_employee_given_add_a_employee_and_delete_it() throws Exception {
         //given
-        Company company = new Company(1,"oocl");
-        Company companyInDB = companyRepository.save(company);
-        Employee employee = new Employee();
-        employee.setCompany(companyInDB);
-        employee.setId(1);
-        employee.setName("jay");
-        employee.setAge(18);
-        employee.setGender("male");
-        Employee employeeInDB = employeeRepository.save(employee);
+        Company companyInDB = addOneCompanyToDB();
+        Employee employeeInDB = addEmployeeToDB(companyInDB);
         //when and then
         mockMvc.perform(delete("/employees/"+employeeInDB.getId())
                 .contentType(MediaType.APPLICATION_JSON))
@@ -89,15 +87,8 @@ public class EmployeeIntegrationTest extends CommonIntegrationTest {
     @Test
     void should_return_ok_when_modify_a_employee_given_a_employee() throws Exception {
         //given
-        Company company = new Company(1,"oocl");
-        Company companyInDB = companyRepository.save(company);
-        Employee employee = new Employee();
-        employee.setCompany(companyInDB);
-        employee.setId(1);
-        employee.setName("jay");
-        employee.setAge(18);
-        employee.setGender("male");
-        Employee employeeInDB = employeeRepository.save(employee);
+        Company companyInDB = addOneCompanyToDB();
+        Employee employeeInDB = addEmployeeToDB(companyInDB);
         String modifyEmployeeJsonStr = "{\n" + "\"name\":\"chengcheng\",\n" + "\"age\": 15,\n"
                 + "\"gender\": \"Female\",\n" + "\"companyId\":"
                 +companyInDB.getCompany_id()
@@ -113,8 +104,7 @@ public class EmployeeIntegrationTest extends CommonIntegrationTest {
     @Test
     void should_return_2_when_paged_employee_list_given_page_2_and_page_size_4() throws Exception {
         //given
-        Company company = new Company(1,"oocl");
-        Company companyInDB = companyRepository.save(company);
+        Company companyInDB = addOneCompanyToDB();
         for(int i=0; i<10; i++){
             Employee employee = new Employee();
             employee.setCompany(companyInDB);
