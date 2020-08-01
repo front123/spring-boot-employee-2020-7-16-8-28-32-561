@@ -3,7 +3,7 @@ package com.thoughtworks.springbootemployee.dto;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-public class EmployeeRequest {
+public class EmployeeRequestDto {
     @NotNull
     private String name;
     @NotNull
@@ -46,13 +46,13 @@ public class EmployeeRequest {
         this.companyId = companyId;
     }
 
-    public EmployeeRequest(String name, int age, String gender, int companyId) {
+    public EmployeeRequestDto(String name, int age, String gender, int companyId) {
         this.name = name;
         this.age = age;
         this.gender = gender;
         this.companyId = companyId;
     }
 
-    public EmployeeRequest() {
+    public EmployeeRequestDto() {
     }
 }

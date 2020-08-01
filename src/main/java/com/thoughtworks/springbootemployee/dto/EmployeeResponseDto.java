@@ -1,6 +1,6 @@
 package com.thoughtworks.springbootemployee.dto;
 
-public class EmployeeResponse {
+public class EmployeeResponseDto {
     private int id;
     private String name;
     private int age;
