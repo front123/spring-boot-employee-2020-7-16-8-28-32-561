@@ -14,21 +14,17 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
     private final EmployeeRepository employeeRepository;
     private final CompanyRepository companyRepository;
-//    private final CompanyService companyService;
 
     public EmployeeServiceImpl(EmployeeRepository employeeRepository, CompanyRepository companyRepository, CompanyService companyService) {
         this.employeeRepository = employeeRepository;
         this.companyRepository = companyRepository;
-//        this.companyService = companyService;
     }
 
     @Override
@@ -38,24 +34,14 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee getEmployeeById(int id) throws EmployeeNotFoundException {
-        Employee employee = employeeRepository.findById(id).orElseThrow(EmployeeNotFoundException::new);
-        return employee;
+        return employeeRepository.findById(id).orElseThrow(EmployeeNotFoundException::new);
     }
 
     @Override
     public EmployeeResponseDto updateEmployee(Integer employeeId, EmployeeRequestDto employeeRequestDto) throws CompanyNotFoundException {
 
-        Optional<Company> company = companyRepository.findById(employeeRequestDto.getCompanyId());
-        Employee employee = new Employee();
-        BeanUtils.copyProperties(employeeRequestDto, employee);
-        employee.setCompany(company.get());
-        employee.setId(employeeId);
-        Employee employeeReturn = employeeRepository.save(employee);
-
-        EmployeeResponseDto employeeResponseDto = new EmployeeResponseDto();
-        BeanUtils.copyProperties(employeeReturn, employeeResponseDto);
-        employeeResponseDto.setCompanyName(company.get().getName());
-        return employeeResponseDto;
+        Company company = companyRepository.findById(employeeRequestDto.getCompanyId()).orElseThrow(CompanyNotFoundException::new);
+        return createResponse(company, employeeRequestDto);
     }
 
     @Override
@@ -76,16 +62,18 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public EmployeeResponseDto addEmployee(EmployeeRequestDto employeeRequestDto) throws CompanyNotFoundException {
 
-        Optional<Company> company = companyRepository.findById(employeeRequestDto.getCompanyId());
+        Company company = companyRepository.findById(employeeRequestDto.getCompanyId()).orElseThrow(CompanyNotFoundException::new);
+        return createResponse(company, employeeRequestDto);
+    }
+
+    private EmployeeResponseDto createResponse(Company company, EmployeeRequestDto employeeRequestDto){
         Employee employee = new Employee();
         BeanUtils.copyProperties(employeeRequestDto, employee);
-        employee.setCompany(company.get());
+        employee.setCompany(company);
         Employee employeeReturn = employeeRepository.save(employee);
         EmployeeResponseDto employeeResponseDto = new EmployeeResponseDto();
         BeanUtils.copyProperties(employeeReturn, employeeResponseDto);
-        employeeResponseDto.setCompanyName(company.get().getName());
+        employeeResponseDto.setCompanyName(company.getName());
         return employeeResponseDto;
     }
-
-
 }
