@@ -1,7 +1,7 @@
 package com.thoughtworks.springbootemployee.service.impl;
 
-import com.thoughtworks.springbootemployee.dto.EmployeeRequest;
-import com.thoughtworks.springbootemployee.dto.EmployeeResponse;
+import com.thoughtworks.springbootemployee.dto.EmployeeRequestDto;
+import com.thoughtworks.springbootemployee.dto.EmployeeResponseDto;
 import com.thoughtworks.springbootemployee.entity.Company;
 import com.thoughtworks.springbootemployee.entity.Employee;
 import com.thoughtworks.springbootemployee.exception.CompanyNotFoundException;
@@ -23,12 +23,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     private final EmployeeRepository employeeRepository;
     private final CompanyRepository companyRepository;
-    private final CompanyService companyService;
+//    private final CompanyService companyService;
 
     public EmployeeServiceImpl(EmployeeRepository employeeRepository, CompanyRepository companyRepository, CompanyService companyService) {
         this.employeeRepository = employeeRepository;
         this.companyRepository = companyRepository;
-        this.companyService = companyService;
+//        this.companyService = companyService;
     }
 
     @Override
@@ -38,23 +38,24 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee getEmployeeById(int id) throws EmployeeNotFoundException {
-        return employeeRepository.findById(id).orElseThrow(EmployeeNotFoundException::new);
+        Employee employee = employeeRepository.findById(id).orElseThrow(EmployeeNotFoundException::new);
+        return employee;
     }
 
     @Override
-    public EmployeeResponse updateEmployee(Integer employeeId,EmployeeRequest employeeRequest) throws CompanyNotFoundException {
+    public EmployeeResponseDto updateEmployee(Integer employeeId, EmployeeRequestDto employeeRequestDto) throws CompanyNotFoundException {
 
-        Optional<Company> company = Optional.ofNullable(companyService.getCompanyByID(employeeRequest.getCompanyId()));
+        Optional<Company> company = companyRepository.findById(employeeRequestDto.getCompanyId());
         Employee employee = new Employee();
-        BeanUtils.copyProperties(employeeRequest, employee);
+        BeanUtils.copyProperties(employeeRequestDto, employee);
         employee.setCompany(company.get());
         employee.setId(employeeId);
         Employee employeeReturn = employeeRepository.save(employee);
 
-        EmployeeResponse employeeResponse = new EmployeeResponse();
-        BeanUtils.copyProperties(employeeReturn, employeeResponse);
-        employeeResponse.setCompanyName(company.get().getName());
-        return employeeResponse;
+        EmployeeResponseDto employeeResponseDto = new EmployeeResponseDto();
+        BeanUtils.copyProperties(employeeReturn, employeeResponseDto);
+        employeeResponseDto.setCompanyName(company.get().getName());
+        return employeeResponseDto;
     }
 
     @Override
@@ -73,18 +74,17 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public EmployeeResponse addEmployee(EmployeeRequest employeeRequest) throws CompanyNotFoundException {
+    public EmployeeResponseDto addEmployee(EmployeeRequestDto employeeRequestDto) throws CompanyNotFoundException {
 
-        Optional<Company> company = Optional.ofNullable(companyService.getCompanyByID(employeeRequest.getCompanyId()));
+        Optional<Company> company = companyRepository.findById(employeeRequestDto.getCompanyId());
         Employee employee = new Employee();
-        BeanUtils.copyProperties(employeeRequest, employee);
+        BeanUtils.copyProperties(employeeRequestDto, employee);
         employee.setCompany(company.get());
-
         Employee employeeReturn = employeeRepository.save(employee);
-        EmployeeResponse employeeResponse = new EmployeeResponse();
-        BeanUtils.copyProperties(employeeReturn, employeeResponse);
-        employeeResponse.setCompanyName(company.get().getName());
-        return employeeResponse;
+        EmployeeResponseDto employeeResponseDto = new EmployeeResponseDto();
+        BeanUtils.copyProperties(employeeReturn, employeeResponseDto);
+        employeeResponseDto.setCompanyName(company.get().getName());
+        return employeeResponseDto;
     }
 
 

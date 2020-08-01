@@ -1,7 +1,7 @@
 package com.thoughtworks.springbootemployee.controller;
 
-import com.thoughtworks.springbootemployee.dto.EmployeeRequest;
-import com.thoughtworks.springbootemployee.dto.EmployeeResponse;
+import com.thoughtworks.springbootemployee.dto.EmployeeRequestDto;
+import com.thoughtworks.springbootemployee.dto.EmployeeResponseDto;
 import com.thoughtworks.springbootemployee.entity.Employee;
 import com.thoughtworks.springbootemployee.exception.CompanyNotFoundException;
 import com.thoughtworks.springbootemployee.exception.EmployeeNotFoundException;
@@ -34,8 +34,8 @@ public class EmployeeController {
     }
 
     @PostMapping()
-    public EmployeeResponse addEmployee(@RequestBody @Valid EmployeeRequest employeeRequest) throws CompanyNotFoundException {
-        return employeeService.addEmployee(employeeRequest);
+    public EmployeeResponseDto addEmployee(@RequestBody @Valid EmployeeRequestDto employeeRequestDto) throws CompanyNotFoundException {
+        return employeeService.addEmployee(employeeRequestDto);
     }
 
     @DeleteMapping("/{id}")
@@ -55,7 +55,7 @@ public class EmployeeController {
     }
 
     @PutMapping("/{id}")
-    public EmployeeResponse updateEmployee(@PathVariable Integer id, @RequestBody EmployeeRequest employeeRequest) throws CompanyNotFoundException {
-        return employeeService.updateEmployee(id, employeeRequest);
+    public EmployeeResponseDto updateEmployee(@PathVariable Integer id, @RequestBody EmployeeRequestDto employeeRequestDto) throws CompanyNotFoundException {
+        return employeeService.updateEmployee(id, employeeRequestDto);
     }
 }

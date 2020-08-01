@@ -1,9 +1,13 @@
 package com.thoughtworks.springbootemployee;
 
+import com.thoughtworks.springbootemployee.dto.EmployeeRequestDto;
+import com.thoughtworks.springbootemployee.dto.EmployeeResponseDto;
+import com.thoughtworks.springbootemployee.entity.Company;
 import com.thoughtworks.springbootemployee.entity.Employee;
+import com.thoughtworks.springbootemployee.exception.CompanyNotFoundException;
 import com.thoughtworks.springbootemployee.exception.EmployeeNotFoundException;
+import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
-import com.thoughtworks.springbootemployee.service.EmployeeService;
 import com.thoughtworks.springbootemployee.service.impl.EmployeeServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -15,12 +19,16 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
 public class EmployeeServiceTest {
 
     @Mock
     private EmployeeRepository employeeRepository;
+
+    @Mock
+    private CompanyRepository companyRepository;
 
     @InjectMocks
     private EmployeeServiceImpl employeeService;
@@ -54,15 +62,18 @@ public class EmployeeServiceTest {
     }
 
     @Test
-    void should_return_1_employee_with_id_1_when_update_employee_given_1_employee_with_id_1(){
+    void should_return_1_employee_with_id_1_when_update_employee_given_1_employee_with_id_1() throws CompanyNotFoundException {
         //given
         Employee employee = new Employee();
         employee.setId(1);
-        Mockito.when(employeeRepository.save(employee)).thenReturn(employee);
+        Company company = new Company();
+        Mockito.when(companyRepository.findById(Mockito.any())).thenReturn(Optional.of(company));
+        Mockito.when(employeeRepository.save(Mockito.any())).thenReturn(employee);
+        EmployeeRequestDto employeeRequestDto = new EmployeeRequestDto();
         //when
-        Employee actualEmployee = employeeService.updateEmployee(employee);
+        EmployeeResponseDto actualEmployee = employeeService.updateEmployee(1, employeeRequestDto);
         //then
-        Assertions.assertEquals(employee, actualEmployee);
+        Assertions.assertEquals(employee.getId(), actualEmployee.getId());
     }
 
     /*
