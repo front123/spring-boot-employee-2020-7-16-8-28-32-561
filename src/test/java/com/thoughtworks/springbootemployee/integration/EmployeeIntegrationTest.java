@@ -67,7 +67,7 @@ public class EmployeeIntegrationTest extends CommonIntegrationTest {
         //when and then
         String employeeJsonStr = "{\n" + "\"name\":\"Jay\",\n" + "\"age\": 15,\n"
                 + "\"gender\": \"male\",\n"
-                + "\"companyId\":"+companyInDB.getCompany_id()+"\n" + "}";
+                + "\"companyId\":"+companyInDB.getId()+"\n" + "}";
         mockMvc.perform(post("/employees")
                 .content(employeeJsonStr).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("name").value("Jay"));
@@ -91,7 +91,7 @@ public class EmployeeIntegrationTest extends CommonIntegrationTest {
         Employee employeeInDB = addEmployeeToDB(companyInDB);
         String modifyEmployeeJsonStr = "{\n" + "\"name\":\"chengcheng\",\n" + "\"age\": 15,\n"
                 + "\"gender\": \"Female\",\n" + "\"companyId\":"
-                +companyInDB.getCompany_id()
+                +companyInDB.getId()
                 +"\n" + "}";
         //when and then
         mockMvc.perform(put("/employees/" + employeeInDB.getId())

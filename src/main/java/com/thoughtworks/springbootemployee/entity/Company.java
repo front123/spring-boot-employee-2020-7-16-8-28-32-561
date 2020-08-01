@@ -10,19 +10,20 @@ import java.util.List;
 @Table(name = "company")
 public class Company {
     @Id
+    @Column(name = "company_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int company_id;
+    private int id;
     private String name;
     @JsonIgnore
     @OneToMany(mappedBy = "company")
     private List<Employee> employees;
 
-    public int getCompany_id() {
-        return company_id;
+    public int getId() {
+        return id;
     }
 
-    public void setCompany_id(int id) {
-        this.company_id = id;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public List<Employee> getEmployees() {
@@ -41,8 +42,8 @@ public class Company {
         this.name = name;
     }
 
-    public Company(int company_id, String name) {
-        this.company_id = company_id;
+    public Company(int id, String name) {
+        this.id = id;
         this.name = name;
     }
 

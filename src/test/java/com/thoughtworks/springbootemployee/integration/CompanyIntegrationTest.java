@@ -47,7 +47,7 @@ public class CompanyIntegrationTest extends CommonIntegrationTest{
         mockMvc.perform(get("/companies")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(content().json("[{\"company_id\":"+companyInDB.getCompany_id()+",\"name\":\"oocl\"}]"));
+                .andExpect(content().json("[{\"company_id\":"+companyInDB.getId()+",\"name\":\"oocl\"}]"));
     }
 
     @Test
@@ -56,7 +56,7 @@ public class CompanyIntegrationTest extends CommonIntegrationTest{
         Company companyInDB = addOneCompanyToDB();
 
         //when and then
-        mockMvc.perform(get("/companies/"+companyInDB.getCompany_id())
+        mockMvc.perform(get("/companies/"+companyInDB.getId())
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("name").value("oocl"));
@@ -71,7 +71,7 @@ public class CompanyIntegrationTest extends CommonIntegrationTest{
         Employee employee2 = addEmployeeToDB(companyInDB);
 
         //when and then
-        mockMvc.perform(get("/companies/"+companyInDB.getCompany_id()+"/employees")
+        mockMvc.perform(get("/companies/"+companyInDB.getId()+"/employees")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("[0].name").value("jay"))
