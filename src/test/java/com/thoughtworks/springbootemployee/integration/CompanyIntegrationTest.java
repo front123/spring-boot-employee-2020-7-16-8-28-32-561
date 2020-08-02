@@ -82,4 +82,16 @@ public class CompanyIntegrationTest extends CommonIntegrationTest{
         //when and then
         mockMvc.perform(delete("/companies/"+companyInDB.getId())).andExpect(status().isOk());
     }
+
+    @Test
+    void should_return_length_is_2_when_get_companies_by_paging_given_10_companies_in_db_and_page_is2_and_pageSize_is4() throws Exception {
+        //given
+        for(int i=0; i<10; i++){
+            addOneCompanyToDB();
+        }
+        //when and then
+        mockMvc.perform(get("/companies?page=2&pageSize=4").contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("content.length()").value(2));
+    }
 }

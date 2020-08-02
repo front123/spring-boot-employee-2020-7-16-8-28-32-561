@@ -30,7 +30,8 @@ public class CommonIntegrationTest {
     }
 
     protected Company addOneCompanyToDB(){
-        Company company = new Company(1,"oocl");
+        Company company = new Company();
+        company.setName("oocl");
         return companyRepository.save(company);
     }
     protected Employee addEmployeeToDB(Company companyInDB){
