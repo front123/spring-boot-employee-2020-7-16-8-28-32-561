@@ -104,4 +104,12 @@ public class CompanyIntegrationTest extends CommonIntegrationTest{
                 .andExpect(jsonPath("name").value("tw"));
     }
 
+    @Test
+    void should_return_ok_when_delete_employees_by_company_id_given_a_company_in_db() throws Exception {
+        //given
+        Company companyInDB = addOneCompanyToDB();
+
+        //when and then
+        mockMvc.perform(delete("/companies/"+companyInDB.getId())).andExpect(status().isOk());
+    }
 }
