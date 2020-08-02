@@ -52,9 +52,8 @@ public class CompanyController {
         return companyService.updateCompany(company);
     }
 
-    //todo delete Employees in Company by company id
     @DeleteMapping("/{id}")
-    public void deleteCompanyById(@PathVariable Integer id){
-        companyService.deleteCompanyById(id);
+    public void deleteEmployeesByCompanyId(@PathVariable Integer id) throws CompanyNotFoundException {
+        companyService.deleteEmployeesByCompanyId(id);
     }
 }

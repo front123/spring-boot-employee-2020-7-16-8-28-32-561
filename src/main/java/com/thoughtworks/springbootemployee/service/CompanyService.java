@@ -22,4 +22,6 @@ public interface CompanyService {
     Company updateCompany(Company company);
 
     void deleteCompanyById(Integer id);
+
+    void deleteEmployeesByCompanyId(Integer id) throws CompanyNotFoundException;
 }
