@@ -55,7 +55,7 @@ public class EmployeeController {
     }
 
     @PutMapping("/{id}")
-    public EmployeeResponseDto updateEmployee(@PathVariable Integer id, @RequestBody EmployeeRequestDto employeeRequestDto) throws CompanyNotFoundException {
+    public EmployeeResponseDto updateEmployee(@PathVariable Integer id, @RequestBody @Valid EmployeeRequestDto employeeRequestDto) throws CompanyNotFoundException {
         return employeeService.updateEmployee(id, employeeRequestDto);
     }
 }
