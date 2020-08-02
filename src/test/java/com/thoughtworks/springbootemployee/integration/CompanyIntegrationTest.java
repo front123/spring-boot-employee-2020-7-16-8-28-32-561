@@ -89,4 +89,19 @@ public class CompanyIntegrationTest extends CommonIntegrationTest{
                 .andExpect(jsonPath("name").value("oocl"));
 
     }
+
+    @Test
+    void should_return_company_with_name_tw_when_update_company_given_a_company_with_name_oocl_in_db() throws Exception {
+        //given
+        Company companyInDB = addOneCompanyToDB();
+        String newCompanyJsonStr = "{\"id\":"+companyInDB.getId()+", \"name\":\"tw\"}";
+
+        //when and then
+        mockMvc.perform(put("/companies/"+companyInDB.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(newCompanyJsonStr))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("name").value("tw"));
+    }
+
 }
